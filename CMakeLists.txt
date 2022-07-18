@@ -32,11 +32,13 @@ project(CppLearn VERSION ${PROJ_VERSION} DESCRIPTION ${PROJ_DESCRIPTION} LANGUAG
 # List of source files
 set(HEADER_FILES
   src/chip8.hpp
-  src/cpu.hpp)
+  src/cpu.hpp
+  src/screen.hpp)
 
 set(SRC_FILES 
   src/main.cpp
   src/chip8.cpp
-  src/cpu.cpp)
+  src/cpu.cpp
+  src/screen.cpp)
 
 add_executable(${PROJ_NAME} ${SRC_FILES} ${HEADER_FILES})

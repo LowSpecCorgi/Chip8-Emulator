@@ -1,5 +1,7 @@
 #pragma once
 
+#include "screen.hpp"
+
 #include <array>
 #include <stdexcept>
 #include <string>
@@ -16,7 +18,7 @@ class Cpu {
     public:
         Cpu();
 
-        void load_code(std::array<uint8_t, RAM_SIZE - PROGRAM_START> code);
+        void load_code(const std::array<uint8_t, RAM_SIZE - PROGRAM_START> code);
 
         void emulate_cycle();
 
@@ -52,9 +54,13 @@ class Cpu {
         // nn = 8 bit immediate number
 
         // Not too sure how to represent 12 bits :(
-        bool handle_nnn(const char identifier, const uint8_t nnn);
+        bool handle_nnn(const char identifier, const char instruction);
 
-        bool handle_nn(const char identifier, const uint8_t x, const uint8_t nn);
+        bool handle_nn(const char identifier, const char instruction);
+
+        bool handle_cls(const char instruction);
+
+        bool handle_dxyn(const char identifier, const char instruction);
 
     private:
         // Error constants
@@ -63,6 +69,9 @@ class Cpu {
         const std::string OUTSIDE_OF_RAM_ERR = "Trying to access memory outside of the RAM!";
         const std::string OUTSIDE_OF_REG_ERR = "Trying to access memory outside of the registry!";
         const std::string INVALID_INSTRUCTION_ERR = "This instruction is invalid! Instruction: ";
+
+        // The screen
+        Screen screen;
 
         std::array<uint8_t, RAM_SIZE> ram{};
 
@@ -88,6 +97,31 @@ class Cpu {
         // The current instruction
         uint16_t opcode = 0;
 
+        // Spriteset
+        std::array<uint8_t, 80> spriteset {
+            0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
+            0x20, 0x60, 0x20, 0x20, 0x70, // 1
+            0xF0, 0x10, 0xF0, 0x80, 0xF0, // 2
+            0xF0, 0x10, 0xF0, 0x10, 0xF0, // 3
+            0x90, 0x90, 0xF0, 0x10, 0x10, // 4
+            0xF0, 0x80, 0xF0, 0x10, 0xF0, // 5
+            0xF0, 0x80, 0xF0, 0x90, 0xF0, // 6
+            0xF0, 0x10, 0x20, 0x40, 0x40, // 7
+            0xF0, 0x90, 0xF0, 0x90, 0xF0, // 8
+            0xF0, 0x90, 0xF0, 0x10, 0xF0, // 9
+            0xF0, 0x90, 0xF0, 0x90, 0x90, // A
+            0xE0, 0x90, 0xE0, 0x90, 0xE0, // B
+            0xF0, 0x80, 0x80, 0x80, 0xF0, // C
+            0xE0, 0x90, 0x90, 0x90, 0xE0, // D
+            0xF0, 0x80, 0xF0, 0x80, 0xF0, // E
+            0xF0, 0x80, 0xF0, 0x80, 0x80  // F
+        };
+
         // Instruction bit-masks
+
+        // Clears the screen
+        const uint16_t CLS = 0x00E0;
+
+        const uint16_t DRAW_IDENTIFIER = 'D';
 
 };

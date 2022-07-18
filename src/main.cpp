@@ -1,6 +1,7 @@
+#include "chip8.hpp"
+
 #include <array>
 #include <memory>
-#include "chip8.hpp"
 #include <iostream>
 
 int main() {
@@ -15,8 +16,6 @@ int main() {
     } catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
     }
-
-    std::cout << "Ran cycle\n" << std::endl;
 
     return 0;
 }
