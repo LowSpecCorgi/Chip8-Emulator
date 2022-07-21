@@ -101,22 +101,7 @@ bool Cpu::handle_cls(const char instruction) {
 bool Cpu::handle_dxyn(const char identifier, const char instruction) {
     if (identifier != DRAW_IDENTIFIER) return false;
 
-    uint8_t x = instruction & 0x0F00;
-    uint8_t y = instruction & 0x00F0;
-    uint8_t n = instruction & 0x000F;
-
-    uint8_t xcoord = get_value_from_reg(x) & 63;
-    uint8_t ycoord = get_value_from_reg(x) & 31;
-
-    set_value_in_reg(16, 0);
-
-    for (uint8_t i = 0; i < n; i++) {
-        uint8_t pixel = ram[index_register + i];
-        for (uint8_t j = 0; j < 8; j++) {
-            uint8_t sprite_pixel = pixel & (0x80 >> j);
-
-        }
-    }
+    // NOT IMPLEMENTED!!
 
     return true;
 }
